@@ -1,0 +1,126 @@
+* { box-sizing: border-box }
+html, body {
+  display: table;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+.box {
+  margin: auto;
+  padding: 25px 50px;
+  width: 350px;
+  min-height: 115px;  
+  border-radius: 15px !important;
+  background-color: rgba(63, 16, 16, 0.4) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  font: 12px/15px Arial, Helvetica, sans-serif;
+  color: white;
+}
+h2 {
+  margin: 0 10px;
+  line-height: 40px;
+}
+form {
+  padding: 0 10px 10px;
+}
+form::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+label {
+  position: absolute;
+  left: -9999px;
+}
+.input-default, textarea {
+  margin: 4px;
+  padding: 5px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid #ccc;
+  font-size: 11px;
+}
+
+input:focus {
+  z-index: 15;
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  outline: 0;
+}
+#password {
+  top:-1px;
+  margin-bottom: 5px;
+}
+.register-form {
+  margin: auto;
+  padding: 40px 50px;
+  width: 350px;
+  min-height: 115px; 
+   border-radius: 15px !important;
+  background-color: rgba(63, 16, 16, 0.4) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  font: 12px/15px Arial, Helvetica, sans-serif;
+  color: white;
+}
+  
+.register-form input {
+  margin-bottom: 5px ;
+}
+
+#first-name {
+  margin-top: 5px;
+}
+.captcha {
+  margin: 10px 0;
+}
+.captcha label {
+  position: relative;
+  left: 0;
+}
+.submit {
+  float: right;
+  padding: 0;
+  width: fit-content;
+  height: 30px;
+  background: #78e08f;
+  color: #140;
+  border-color: #471;
+}
+.submit:hover {
+  color: #025;
+  background: #28e;
+  border-color: #16c;
+}
+#submit ~ a {
+  display: block;
+  float: left;
+  width: fit-content;
+  height: fit-content;
+  text-decoration: none;
+  color: #666;
+}
+.submit ~ a:hover {
+  text-decoration: underline;
+}
+
+.register {
+  color: white;
+}
+
+.contents{
+  margin: auto;
+  padding: 25px 25px;
+  width: 350px;
+  min-height: 115px;  
+  border-radius: 15px !important;
+  background-color: rgba(63, 16, 16, 0.4) !important;
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  font: 12px/15px Arial, Helvetica, sans-serif;
+  color: white;
+}
+

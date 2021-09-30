@@ -1,0 +1,22 @@
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="https://www.azuma-mie.co.jp/wordpress/wp-content/uploads/2021/08/g0577-768x768.png" class="rounded-circle user_img">
+									<span class="online_icon"></span>
+								</div>
+								<% if user_signed_in? %>
+									<%= link_to "土構造検査", user_path(current_user.id), class:"user_info" %>
+								<% end %>
+								<div class="video_cam">
+									<span><i class="fas fa-video"></i></span>
+									<span><i class="fas fa-phone"></i></span>
+								</div>
+							</div>
+							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+							<div class="action_menu", id="action_menu">
+								<ul>
+									<li><i class="fas fa-user-circle"></i> Room profile</li>
+									<li><i class="fas fa-users"></i> Add to close friends</li>
+									<li><i class="fas fa-plus"></i> Add to group</li>
+									<li><i class="fas fa-ban"></i> Block</li>
+								</ul>
+							</div>

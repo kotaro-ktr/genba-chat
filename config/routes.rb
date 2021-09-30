@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  get 'messages/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users
   root to: "messages#index"
+  resources :rooms, only:[:new, :create] do
+    # resources :charts, only: [:new, :create]
+    resources :messages, only: [:index, :create]
+  end
+  resources :users, only: :show
 end
