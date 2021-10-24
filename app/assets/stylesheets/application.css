@@ -15,10 +15,14 @@
  */
 
 
+ body,html{
+  height: 100%;
+  margin: 0;
+  background: #7F7FD5;
+      background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
 
-<<<<<<< Updated upstream
- 
-=======
+
 
 .chat{
   margin-top: auto;
@@ -140,7 +144,7 @@ background-color: rgba(0,0,0,0.3) !important;
 .active_room{
   background-color: rgba(0,0,0,0.3);
   text-align: right !important;
-}
+
 .user_img{
   height: 70px;
   width: 70px;
@@ -178,6 +182,7 @@ background-color: #c23616 !important;
 .user_info {
 margin-top: auto;
 margin-bottom: auto;
+
 margin-top: 8px;
 font-size: 20px;
 color: white;
@@ -194,8 +199,6 @@ font-size: 20px;
 cursor: pointer;
 margin-right: 20px;
 }
-
-
 
 .msg_cotainer{
 margin-top: auto;
@@ -217,6 +220,7 @@ position: relative;
 }
 .msg_time{
 position: relative;
+
 left: 0;
 bottom: -15px;
 color: rgba(255,255,255,0.5);
@@ -224,6 +228,7 @@ font-size: 10px;
 }
 .msg_time_send{
 position: relative;
+
 right:0;
 bottom: -15px;
 color: rgba(255,255,255,0.5);
@@ -232,7 +237,6 @@ font-size: 10px;
 .msg_head{
 position: relative;
 }
-
 
 
 .message{
@@ -353,4 +357,4 @@ textarea{
   width: 100%;
   text-align: left;
 }
->>>>>>> Stashed changes
+
