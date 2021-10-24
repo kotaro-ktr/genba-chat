@@ -1,0 +1,24 @@
+<div class="message">
+
+  <% if @message.user_id == current_user.id %>
+    <div class="d-flex justify-content-start mb-4">
+      <div class="msg_time">
+        <%=  message.created_at %>
+      </div> 
+      <div class="msg_cotainer">
+        <%= message.content %>
+      </div>
+  <% else %>
+		<div class="d-flex justify-content-end mb-4">  
+      <div class="msg_time">
+        <%=  message.created_at %>
+      </div> 
+      <div class="msg_cotainer_send">
+        <%= message.content %>
+      </div>
+    </div>
+  <% end %>
+</div>
+      <%# <%= image_tag message.image.variant(resize: '500x500'), class: 'message-image' if message.image.attached? %> 
+  <%# </div>  
+</div> %>    
