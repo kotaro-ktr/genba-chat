@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Genba Chat</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="chat.js"></script>
+	</head>
+	<!--Coded With Love By Mutiullah Samim-->
+	<body>		
+    <div class="container-fluid h-100">
+			<div class="row justify-content-center h-100">
+				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+
+					<div class="card-header">
+						<%= render "card-header" %>
+					</div>
+
+					<div class="card-body contacts_body">
+						<%= render "card-body" %>
+					</div>
+
+					<div class="card-footer">
+						<%= render "card-footer" %>
+					</div>
+        </div>
+      </div>
+        <%# <div class="col-md-8 col-xl-6 chat">
+					<div class="card">
+					
+						<div class="msg_head">
+							<%= render "messages/msg_head" %>
+						<%# </div>
+
+						<div class="card-body msg_card_body">
+							<%= render "messages/msg_card_body" %>
+						<%# </div>
+						
+						<div class="card-footer">
+							<%= render "messages/input_group"%>
+            <%# </div>
+          <%# </div>   %>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+<ui class="contacts">
+	<% if user_signed_in? %>
+	<div class="user_info">
+  	<% current_user.rooms.each do |room| %>
+			<li class="active_room">
+				<div class="d-flex bd-highlight">
+				<div class="img_cont">
+					<img src="https://www.azuma-mie.co.jp/wordpress/wp-content/uploads/2021/08/g0577-768x768.png" class="rounded-circle user_img">
+						<span class="online_icon"></span>
+				</div>
+    			<div class="room">
+      		<div class="room-name">
+        	<%= link_to room.name, room_messages_path(room) %>
+      		</div>
+    			</div>
+				</div>
+			</li>
+  	<% end %>
+	</div>
+	<% end %>
+</ui>
