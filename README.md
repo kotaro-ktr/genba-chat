@@ -73,11 +73,11 @@ genba-chat
 * 【URL】
 
 * 【テスト用アカウント】
-user1
+# user1
 name:test1
 password:testtest1
 
-user2
+# user2
 name:test2
 password:testtest2
 
