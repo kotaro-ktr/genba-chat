@@ -83,7 +83,9 @@
 }
 
 .card-footer{
-border-radius: 0 0 15px 15px !important;
+  position: sticky !important;
+  display: flex;
+  border-radius: 0 0 15px 15px !important;
   border-top: 0 !important;
 }
 .container{
@@ -144,7 +146,7 @@ background-color: rgba(0,0,0,0.3) !important;
 .active_room{
   background-color: rgba(0,0,0,0.3);
   text-align: right !important;
-
+}
 .user_img{
   height: 70px;
   width: 70px;
@@ -358,3 +360,12 @@ textarea{
   text-align: left;
 }
 
+/* .input-group {
+  position: sticky !important;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: stretch;
+  align-items: flex-end;
+  width: 100%;
+} */

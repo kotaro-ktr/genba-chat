@@ -1,11 +1,13 @@
 <%= form_with model: @room, url: rooms_path(@user), class:'create_room', local: true do |f| %>
+<div class="create_room_member">
   <%= f.text_area :name, class:'input-default', id:'create-project', placeholder:"プロジェクトルーム名" %>
-  <select name="room[user_ids][]">
-    <option value="">チャットするメンバーを選択してください</option>
+  チャットメンバーを選択（cmdを押して選択）
+  <select name="room[user_ids][]" multiple>
     <% User.where.not(id: current_user.id).each do |user| %>
       <option value=<%= user.id %>><%= user.name %></option>
     <% end %>
   </select>
     <input name="room[user_ids][]" type="hidden" value=<%= current_user.id %>>
 	<%= f.submit '作成', class:'submit' %>
+  </div>
 <% end %>

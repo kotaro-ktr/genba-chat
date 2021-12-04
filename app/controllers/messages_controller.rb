@@ -1,15 +1,9 @@
 class MessagesController < ApplicationController
+  
   def index
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-    #@message = Message.new
-=======
      @room = Room.find(params[:room_id])
      @message = Message.new
      @messages = @room.messages.includes(:user)
->>>>>>> Stashed changes
->>>>>>> Stashed changes
   end
 
 

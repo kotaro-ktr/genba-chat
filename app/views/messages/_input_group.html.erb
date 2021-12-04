@@ -1,22 +1,15 @@
+
 <div class="input-group">
 	<div class="input-group-append">
 		<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 	</div>
-<<<<<<< Updated upstream
-		<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-			<div class="input-group-append">
-				<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-			</div>
-	</div>
-=======
 	<div class="form-inline">
 	<%= form_with model: [@room, @message], class: 'form-controll type_msg', local: true do |f| %>
     		<%= f.text_area :content, class: 'form-controll type_msg', placeholder: 'type a message' %>
 			</div>
 				<div class="input-group-text send_btn">
-						<%= f.submit '▶︎', class:'fass fa-location-arrow'%>
+					<%= f.submit '▶︎', class:'fass fa-location-arrow'%>
 				</div>
-	<% end %>
+		<% end %>
 	</div>
 </div>
->>>>>>> Stashed changes
