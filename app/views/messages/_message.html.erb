@@ -1,8 +1,9 @@
 <div class="message">
  <%# <p><%= "current_user.id=#{current_user.id}, message.user_id=#{message.user_id}" %></p> 
   <% if message.user_id == current_user.id %>
-		<div class="d-flex justify-content-end mb-4"> 
+		<div class="d-flex justify-content-end mb-4">
       <div class="msg_time">
+        <%= message.user.name%> 
         <%=  message.created_at %>
       </div> 
       <div class="msg_cotainer">
@@ -12,6 +13,7 @@
   <% else %> 
     <div class="d-flex justify-content-start mb-4">
       <div class="msg_time">
+        <%= message.user.name%> 
         <%=  message.created_at %>
       </div> 
       <div class="msg_cotainer_send">
