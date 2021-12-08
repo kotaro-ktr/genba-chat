@@ -71,6 +71,7 @@ genba-chat
 また、それぞれの現場において作業進捗をガントチャートで管理できます。
 
 # 【URL】
+https://genba-chat.herokuapp.com/
 
 # 【テスト用アカウント】
 * user1
