@@ -21,6 +21,7 @@ select{
 }
 
 .room_destroy{
+  text-align: right !important;
   cursor: pointer;
   font-size: 15px;
 }
