@@ -19,3 +19,8 @@ select{
   height: auto;
   width /***/:auto;
 }
+
+.room_destroy{
+  cursor: pointer;
+  font-size: 15px;
+}
