@@ -1,4 +1,4 @@
-<!doctype html>
+<%# <!doctype html>
  
 <html>
   <head>
@@ -17,10 +17,119 @@
   <body>
    <%= @room.name %>
     
-    <div class='gantt-wrap'>
+    <%# <div class='gantt-wrap'>
       <svg id="gantt"></svg>
     </div>
     
     <script>${script}</script>
   </body>
+</html> %> 
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+      <div id="gantt-header" class="h-12 p-2 flex items-center">
+        <h1 class="text-xl font-bold">
+          <%= @room.name %>
+        </h1>
+      </div>
+      <div id="gantt-content" class="flex">
+        <div id="gantt-task">
+          <div id="gantt-task-title"class="flex items-center bg-green-400 text-black h-20">
+        <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-48 h-full">タスク
+        </div>
+        <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-24 h-full">開始日
+        </div>
+        <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-24 h-full">完了期限日
+        </div>
+        <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-16 h-full">担当
+        </div>
+        <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-12 h-full">進捗
+        </div>
+      </div>
+        <div id="gantt-calendar">
+          <div id="gantt-day" class="relative h-12">
+            <div v-for="(calendar,new) in calendars" :key="new">
+              <div v-for="(day,new) in calendar.days" :key="new">
+                <div class="border-r h-12 absolute flex items-center justify-center flex-col font-bold text-xs"
+                :style="`width:${block_size}px;left:${day.block_number*block_size}px`">
+                  <span>{{ day.day }}</span>
+                  <span>{{ day.dayOfWeek }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
 </html>
+
+<script>
+    const app = Vue.createApp({
+      data(){
+        return {
+          start_month: '2021-10',
+          end_month: '2022-03',
+          block_size: 30,
+          block_number: 0,
+          calendars:[]
+        }
+      },
+  
+    methods:{
+  getDays(year, month, block_number) {
+    const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+    let days = [];
+    let date = moment(`${year}-${month}-01`);
+    let num = date.daysInMonth();
+    for (let i = 0; i < num; i++) {
+      days.push({
+        day: date.date(),
+        dayOfWeek: dayOfWeek[date.day()],
+        block_number
+      })
+      date.add(1, 'day');
+      block_number++;
+    }
+    return days;
+  },     
+},
+mounted() {
+  this.getCalendar();
+}
+
+getCalendar() {
+  let block_number = 0;
+  let days;
+  let start_month = moment(this.start_month)
+  let end_month = moment(this.end_month)
+  let between_month = end_month.diff(start_month, 'months')
+  for (let i = 0; i <= between_month; i++) {
+    days = this.getDays(start_month.year(), start_month.format('MM'), block_number);
+    this.calendars.push({
+      date: start_month.format('YYYY年MM月'),
+      year: start_month.year(),
+      month: start_month.month(), //month(), 0,1..11と表示
+      start_block_number: block_number,
+      calendar: days.length,
+      days: days
+    })
+    start_month.add(1, 'months')
+    block_number = days[days.length - 1].block_number
+    block_number++;
+  }
+  return block_number;
+},
+  }).mount('#app')
+  
+</script>
