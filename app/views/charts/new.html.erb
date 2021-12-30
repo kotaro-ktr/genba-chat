@@ -6,7 +6,7 @@
   </div>
   <div id="gantt-content" class="flex">
     <div id="gantt-task">
-      <div id="gantt-task-title"class="flex items-center bg-green-400 text-black h-20">
+      <div id="gantt-task-title" class="flex items-center bg-green-400 text-black h-20" ref="task">
         <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-48 h-full">タスク</div>
         <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-24 h-full">開始日</div>
         <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-24 h-full">完了期限日</div>
@@ -14,7 +14,8 @@
         <div class="border-t border-r border-b flex items-center justify-center font-bold text-xs w-12 h-full">進捗</div>
       </div>
     </div>
-    <div id="gantt-calendar" class="overflow-x-scroll w-1/2">
+    <div id="gantt-calendar" class="overflow-x-scroll"
+    :style="`width:${calendarViewWidth}px`">
       <div id="gantt-date" class="h-20">
         <div id="gantt-year-month" class="relative h-8">
           <div v-for="(calendar,index) in calendars" :key="index">
@@ -36,7 +37,18 @@
             </div>
           </div>
         </div>
+        <div id="gantt-height" class="relative">
+          <div v-for="(calendar,index) in calendars" :key="index">
+            <div v-for="(day,index) in calendars.day" :key="index">
+              <div class="border-r border-b absolute"
+              :style="`width:${block_size}px;left:${day.block_number*block_size}px;height:${calendarViewHeight}px`">
+            </div>
+          </div>
+        </div>
       </div>
+      </div>
+       <div id="gantt-bar-area" class="relative" :style="`width:${calendarViewWidth}px;height:${calendarViewHeight}px`">
+       </div>
     </div>
   </div>
 </div>
@@ -55,12 +67,14 @@
           end_month: '2022-03',
           block_size: 30,
           block_number: 0,
-          calendars:[]
+          calendars:[],
           inner_width: '',
           inner_height: '',
+          task_width: '',
+          task_height: '',
         }
       },
-  
+
       methods:{
           getDays(year, month, block_number) {
               const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
@@ -103,10 +117,25 @@
           getWindowSize() {
             this.inner_width = window.innerWidth;
             this.inner_height = window.innerHeight;
+            this.task_width = this.$refs.task.offsetWidth;
+            this.task_height = this.$refs.task.offsetHeight;
           },
       },
+
+      computed: {
+        calendarViewWidth(){
+          return this.inner_width - this.task_width;
+        },
+        calendarViewHeight(){
+          return this.inner_height - this.task_height - 48 -20;
+        },
+      },
+
+  
       mounted() {
           this.getCalendar();
-      },
+          this.getWindowSize();
+          window.addEventListener('resize', this.getWindowSize);
+      }
     })
 </script>
