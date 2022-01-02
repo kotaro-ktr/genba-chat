@@ -76,6 +76,12 @@
         </div>
       </div>
       <div id="gantt-bar-area" class="relative" :style="`width:${calendarViewWidth}px;height:${calendarViewHeight}px`">
+        <div v-for="(bar,index) in taskBars" :key="index">
+          <div :style="bar.style" class="rounded-lg absolute h-5 bg-yellow-100" v-if="bar.list.cat === 'task'">
+            <div class="w-full h-full">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -244,7 +250,36 @@
             })
           })
           return lists;
-        }
+        },
+        taskBars() {
+          let start_date = moment(this.start_month);
+          let top = 10;
+          let left;
+          let between;
+          let start;
+          let style;
+          return this.lists.map(list => {
+            style = {}
+            if(list.cat==='task'){
+              let date_from = moment(list.start_date);
+              let date_to = moment(list.end_date);
+              between = date_to.diff(date_from, 'days');
+              between++;
+              start = date_from.diff(start_date, 'days');
+              left = start * this.block_size;
+              style = {
+                top: `${top}px`,
+                left: `${left}px`,
+                width: `${this.block_size * between}px`,
+              }
+            }
+            top = top + 40;
+            return {
+              style,
+              list
+            }
+          })
+        },
       },
 
   
