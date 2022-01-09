@@ -15,33 +15,33 @@
       </div>
       <div id="gantt-task-list" class="overflow-y-hidden"
       :style="`height:${calendarViewHeight}px`">
-        <div v-for="(list,index) in lists" :key="index" class="flex h-10 border-b bg-gray-100">
-          <template v-if="list.cat === 'category'">
+        <div v-for="(task,index) in displayTasks" :key="index" class="flex h-10 border-b bg-gray-100">
+          <template v-if="task.cat === 'category'">
             <div class="flex items-center font-bold w-full text-sm pl-2">
-              {{list.name}}
+              {{task.name}}
             </div>
           </template>
           <template v-else>
             <div class="border-r flex items-center font-bold w-48 text-sm pl-4">
-              {{list.name}}
+              {{task.name}}
             </div>
             <div class="border-r flex items-center justify-center w-24 text-sm">
-              {{list.start_date}}
+              {{task.start_date}}
             </div>
             <div class="border-r flex items-center justify-center w-24 text-sm">
-              {{list.end_date}}
+              {{task.end_date}}
             </div>
             <div class="border-r flex items-center justify-center w-16 text-sm">
-              {{list.incharge_user}}
+              {{task.incharge_user}}
             </div>
             <div class="flex items-center justify-center w-12 text-sm">
-              {{list.percentage}}%
+              {{task.percentage}}%
             </div>
           </template>
         </div>
       </div>
     </div>
-    <div id="gantt-calendar" class="overflow-x-scroll" :style="`width:${calendarViewWidth}px`" ref="calendar">
+    <div id="gantt-calendar" class="overflow-x-scroll overflow-y-hidden border-l" :style="`width:${calendarViewWidth}px`" ref="calendar">
       <div id="gantt-date" class="h-20">
         <div id="gantt-year-month" class="relative h-8">
           <div v-for="(calendar,index) in calendars" :key="index">
@@ -53,8 +53,8 @@
           </div>
         </div>
         <div id="gantt-day" class="relative h-12">
-          <div v-for="(calendar,index) in calendars" :key="index">
-            <div v-for="(day,index) in calendar.days" :key="index">
+          <div v-for="calendar in calendars" :key="calendar.date">
+            <div v-for="(day,index) in calendar.days" :key="day._key">
               <div class="border-r border-b h-12 absolute flex items-center justify-center flex-col font-bold text-xs bg-gray-100"
                 :class="{'bg-blue-100': day.dayOfWeek === '土', 'bg-red-100': day.dayOfWeek ==='日',
                 'bg-red-600 text-white': calendar.year=== today.year() && calendar.month === today.month() && day.day === today.date()}"
@@ -66,8 +66,8 @@
           </div>
         </div>
         <div id="gantt-height" class="relative">
-          <div v-for="(calendar,index) in calendars" :key="index">
-            <div v-for="day in calendar.days" :key="index">
+          <div v-for="calendar in calendars" :key="calendar.date">
+            <div v-for="day in calendar.days" :key="day._key">
               <div class="border-r border-b absolute bg-gray-100"
                 :class="{'bg-blue-100': day.dayOfWeek === '土', 'bg-red-100': day.dayOfWeek ==='日'}"
                 :style="`width:${block_size}px;left:${day.block_number*block_size}px;height:${calendarViewHeight}px`">
@@ -78,8 +78,8 @@
       </div>
       <div id="gantt-bar-area" class="relative" :style="`width:${calendarViewWidth}px;height:${calendarViewHeight}px`">
         <div v-for="(bar,index) in taskBars" :key="index">
-          <div :style="bar.style" class="rounded-lg absolute h-5 bg-yellow-100" v-if="bar.list.cat === 'task'">
-            <div class="w-full h-full">
+          <div :style="bar.style" class="rounded-lg absolute h-5 bg-yellow-300" v-if="bar.task.cat === 'task'" @mousedown = "mouseDownMove(bar.task)">
+            <div class="w-full h-full" style="pointer-events: none;">
             </div>
           </div>
         </div>
@@ -124,8 +124,8 @@
             id: 1,
             category_id: 1,
             name: 'テスト1',
-            start_date: '2020-11-18',
-            end_date: '2020-11-20',
+            start_date: '2022-1-18', //元々start_date: '2020-11-18'
+            end_date: '2022-1-20', //元々end_date: '2020-11-20'
             incharge_user: '鈴木',
             percentage: 100,
             },
@@ -133,8 +133,8 @@
             id: 2,
             category_id: 1,
             name: 'テスト2',
-            start_date: '2020-11-19',
-            end_date: '2020-11-23',
+            start_date: '2021-11-19',
+            end_date: '2021-11-23',
             incharge_user: '佐藤',
             percentage: 90,
             },
@@ -142,8 +142,8 @@
             id: 3,
             category_id: 1,
             name: 'テスト3',
-            start_date: '2020-11-19',
-            end_date: '2020-12-04',
+            start_date: '2021-11-19',
+            end_date: '2021-12-04',
             incharge_user: '鈴木',
             percentage: 40,
             },
@@ -151,8 +151,8 @@
             id: 4,
             category_id: 1,
             name: 'テスト4',
-            start_date: '2020-11-21',
-            end_date: '2020-11-30',
+            start_date: '2021-11-21',
+            end_date: '2021-11-30',
             incharge_user: '山下',
             percentage: 60,
             },
@@ -160,8 +160,8 @@
             id: 5,
             category_id: 1,
             name: 'テスト5',
-            start_date: '2020-11-25',
-            end_date: '2020-12-04',
+            start_date: '2021-11-25',
+            end_date: '2021-12-04',
             incharge_user: '佐藤',
             percentage: 5,
             },
@@ -169,12 +169,18 @@
             id: 6,
             category_id: 2,
             name: 'テスト6',
-            start_date: '2020-11-28',
-            end_date: '2020-12-08',
+            start_date: '2021-11-28',
+            end_date: '2021-12-08',
             incharge_user: '佐藤',
             percentage: 0,
             },
         ],
+        position_id: 0,
+        dragging:false,
+        pageX:'',
+        elememt:'',
+        left:'',
+        task_id:'',
         }
       },
 
@@ -226,6 +232,29 @@
           todayPosition() {
             this.$refs.calendar.scrollLeft = this.scrollDistance
           },
+          windowSizeCheck() {
+            let height = this.lists.length - this.position_id
+            if (event.deltaY > 0 && height * 40 > this.calendarViewHeight) {
+              this.position_id++
+            } else if (event.deltaY < 0 && this.position_id !== 0) {
+              this.position_id--
+            }
+          },
+          mouseDownMove(task) {
+            this.dragging = true;
+            this.pageX = event.pageX;
+            this.elememt = event.target;
+            this.left = event.target.style.left;
+            this.task_id = task.id;
+            console.log(event.pageX)
+            console.log(event.target)
+          },
+          mouseMove() {
+              if (this.dragging) {
+              let diff = this.pageX - event.pageX;
+              this.element.style.left = `${parseInt(this.left.replace('px', '')) - diff}px`;
+            }
+          },
       },
 
       computed: {
@@ -259,11 +288,11 @@
           let between;
           let start;
           let style;
-          return this.lists.map(list => {
+          return this.displayTasks.map(task => {
             style = {}
-            if(list.cat==='task'){
-              let date_from = moment(list.start_date);
-              let date_to = moment(list.end_date);
+            if(task.cat==='task'){
+              let date_from = moment(task.start_date);
+              let date_to = moment(task.end_date);
               between = date_to.diff(date_from, 'days');
               between++;
               start = date_from.diff(start_date, 'days');
@@ -277,9 +306,13 @@
             top = top + 40;
             return {
               style,
-              list
+              task
             }
           })
+        },
+        displayTasks() {
+          let display_task_number = Math.floor(this.calendarViewHeight / 40);
+          return this.lists.slice(this.position_id, this.position_id + display_task_number);
         },
       },
 
@@ -291,6 +324,12 @@
           this.todayPosition();
           })
           window.addEventListener('resize', this.getWindowSize);
-      }
-    })
+          window.addEventListener('wheel', this.windowSizeCheck);
+          window.addEventListener('mousemove', this.mouseMove);
+          window.addEventListener('mouseup', function(){
+                                  console.log('mouseup');
+                                });
+          }
+      },
+    )
 </script>
