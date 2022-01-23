@@ -385,7 +385,22 @@ textarea{
   padding: 40px;
 }
  
-
+form::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+label {
+  left: -9999px;
+}
+.input-default, textarea {
+  margin: 4px;
+  padding: 5px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid #ccc;
+  font-size: 11px;
+}
 
 /* .input-group {
   position: sticky !important;
