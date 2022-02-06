@@ -38,6 +38,7 @@ label {
   position: absolute;
   left: -9999px;
 }
+
 .input-default, textarea {
   margin: 4px;
   padding: 5px;
