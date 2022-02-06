@@ -30,7 +30,9 @@
             </div>
           </template>
           <template v-else>
-            <div class="border-r flex items-center font-bold w-48 text-sm pl-4">
+            <div
+              @click="editTask(task)"
+              class="border-r flex items-center font-bold w-48 text-sm pl-4">
               {{task.name}}
             </div>
             <div class="border-r flex items-center justify-center w-24 text-sm">
@@ -111,6 +113,7 @@
       <div class="overlay" v-show="show" @click="show=false">
       </div>
       <div class="content" v-show="show">
+        <h2 class="font-bold" v-if="update_mode">タスクの更新</h2>
         <h2 class="font-bold">タスクの追加</h2>
         <div class="my-4">
           <label class="text-xs">カテゴリーID:</label>
@@ -119,7 +122,7 @@
             </option>
           </select>
         </div>
-        <div id="add_task_form" class="my-4">
+        <div class="my-4">
           <label class="text-xs">ID:</label>
           <input class="text-xs border rounded-lg px-4 py-2" v-model.number="form.id">
         </div>
@@ -143,7 +146,26 @@
           <label class="text-xs">進捗度:</label>
           <input class="text-xs border rounded-lg px-4 py-2" v-model="form.percentage" type="number">
         </div>
-        <div>
+        <div v-if="update_mode" class="flex items-center justify-between">
+          <button
+            @click="updateTask(form.id)"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs flex items-center">
+            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <span class="text-xs font-bold text-white">タスクを更新</span>
+          </button>
+          <button @click="deleteTask(form.id)"
+            class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg flex items-center ml-2">
+            <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span class="text-xs font-bold text-white">タスクを削除</span>
+          </button>
+        </div>
+        <div v-else>
           <button @click="saveTask"
           class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
             <svg class="w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,7 +189,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> 
 <script src="http://unpkg.com/vue/dist/vue.js"></script>
-<script src="http://unpkg.com/portal-vue"></script>
 
 <script>
     const app = new Vue({
@@ -261,6 +282,7 @@
         leftResizing:false,
         rightResizing:false,
         show:false,
+        update_mode:false,
         form: {
             category_id: '',
             id: '',
@@ -428,6 +450,8 @@
             },
 
             addTask(){
+              this.update_mode=false;
+              this.form={};
               this.show=true;
             },
 
@@ -437,6 +461,27 @@
               )
               this.form = {}
               this.show = false
+            },
+            editTask() {
+              let task = this.tasks.find(task => task.id === this.task_id);
+              this.update_mode = true;
+              this.show = true;
+              Object.assign(this.form, task);
+            },
+            updateTask(id) {
+              let task = this.tasks.find(task => task.id === id);
+              Object.assign(task, this.form);
+              this.form = {}
+              this.show = false;
+            },
+            deleteTask(id) {
+              let delete_index;
+              this.tasks.map((task, index) => {
+                if (task.id === id) delete_index = index;
+              })
+              this.tasks.splice(delete_index, 1)
+              this.form = {}
+              this.show = false;
             },
       },
 

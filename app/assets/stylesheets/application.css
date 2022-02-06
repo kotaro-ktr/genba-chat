@@ -385,9 +385,10 @@ textarea{
   padding: 40px;
 }
  
-#add_task_form label {
-  position: relative;
-  left: 1000px;
+
+#form label {
+  position: relative !important;
+  left: 0px !important;
 }
 
 /* .input-group {
